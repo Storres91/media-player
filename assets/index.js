@@ -1,26 +1,12 @@
+import MediaPlayer from "./MediaPlayer.mjs";
+import AutoPlay from "./plugins/AutoPlay.mjs";
+
 const video = document.querySelector('video');
-const button = document.querySelector('button');
+const buttonPlayback = document.querySelector('#button-playback');
+const buttonMute = document.querySelector('#button-mute')
 
-class MediaPlayer {
-    constructor({
-    MediaElement
-    }) {
-    this.MediaElement = MediaElement
-    }
+const player = new MediaPlayer({ MediaElement: video, plugins: [new AutoPlay()] });
 
-    play() {
-    this.MediaElement.play();
-    }
-
-    pause() {
-    this.MediaElement.pause();
-    }
-
-    togglePlay() {
-    this.MediaElement.paused ? this.MediaElement.play() : this.MediaElement.pause()
-    }
-}
-
-const player = new MediaPlayer({ MediaElement: video });
-
-button.onclick = () => player.togglePlay();
+buttonPlayback.onclick = () => player.togglePlay();
+buttonMute.onclick = () => player.toggleMute();
+video.onclick = () => player.togglePlay();

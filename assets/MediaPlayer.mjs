@@ -9,8 +9,22 @@ class MediaPlayer {
     }
 
     _initPlugins(){
+        const player = {
+            play: () => this.play(),
+            pause: () => this.pause(),
+            media: this.MediaElement,
+
+            get muted() {
+                return this.media.muted;
+            },
+
+            set muted(value) {
+                this.media.muted = value;
+            }
+        }
+
         this.plugins.forEach(plugin => {
-            plugin.run(this);
+            plugin.run(player);
         });
     }
 
@@ -23,7 +37,7 @@ class MediaPlayer {
     }
 
     togglePlay() {
-        this.MediaElement.paused ? this.MediaElement.play() : this.MediaElement.pause()
+        this.MediaElement.paused ? this.play() : this.pause()
     }
 
     mute(){
@@ -35,7 +49,7 @@ class MediaPlayer {
     }
 
     toggleMute(){
-        this.MediaElement.muted ? this.MediaElement.muted = false : this.MediaElement.muted = true;
+        this.MediaElement.muted ? this.unmute() : this.mute()
     }
 }
 

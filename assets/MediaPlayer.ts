@@ -1,30 +1,19 @@
 class MediaPlayer {
+    MediaElement: HTMLMediaElement;
+    plugins: Array<any>
+
     constructor({
         MediaElement,
         plugins = []
     }) {
         this.MediaElement = MediaElement,
         this.plugins = plugins,
-        this._initPlugins()
+        this.initPlugins()
     }
 
-    _initPlugins(){
-        const player = {
-            play: () => this.play(),
-            pause: () => this.pause(),
-            media: this.MediaElement,
-
-            get muted() {
-                return this.media.muted;
-            },
-
-            set muted(value) {
-                this.media.muted = value;
-            }
-        }
-
+    private initPlugins() {
         this.plugins.forEach(plugin => {
-            plugin.run(player);
+            plugin.run(this);
         });
     }
 
@@ -40,16 +29,16 @@ class MediaPlayer {
         this.MediaElement.paused ? this.play() : this.pause()
     }
 
-    mute(){
+    mute() {
         this.MediaElement.muted = true;
     }
 
-    unmute(){
+    unmute() {
         this.MediaElement.muted = false;
     }
 
-    toggleMute(){
-        this.MediaElement.muted ? this.unmute() : this.mute()
+    toggleMute() {
+        this.MediaElement.muted ? this.unmute() : this.mute();
     }
 }
 
